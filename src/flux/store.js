@@ -4,6 +4,7 @@ import Dispatcher from "./dispatcher";
 import Constants from "./constants";
 import getSidebarNavItems from "../data/sidebar-nav-items";
 import getStockDescription from "../data/stock";
+import getStocks from "../data/get-stock";
 import postLoginAccount from "../data/auth/login";
 import postRegisterAccount from "../data/auth/register";
 import logoutAccount from "../data/auth/logout";
@@ -81,6 +82,12 @@ class Store extends EventEmitter {
       _store.token = null
       sessionStorage.removeItem('token');
     }
+    this.emit(Constants.CHANGE);
+    return result;
+  }
+
+  async getStocks() {
+    const result = await getStocks({token: this.getAccount()})
     this.emit(Constants.CHANGE);
     return result;
   }

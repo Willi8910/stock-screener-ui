@@ -37,7 +37,7 @@ class CheckStock extends React.Component {
         }
       }) 
       .catch((error) => {
-        this.setState({loading:false, error: error.response? error.response.data : null})
+        this.setState({loading:false, error: error.response? error.response.message : null})
       })
     }
   }
@@ -106,7 +106,7 @@ class CheckStock extends React.Component {
                   <tbody>
                     {priceTable.map((method, idx) => {
                       return(
-                      <tr>
+                      <tr key={idx}>
                         <td>{idx}</td>
                         <td>{method.method}</td>
                         <td>{method.current_price}</td>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import shortid from "shortid";
 import { Card, CardBody } from "shards-react";
-
+import ReactTooltip from 'react-tooltip';
 import Chart from "../../utils/chart";
 
 class SmallStats extends React.Component {
@@ -51,7 +51,7 @@ class SmallStats extends React.Component {
                 isplay: false,
                 // Avoid getting the graph line cut of at the top of the canvas.
                 // Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
-                suggestedMax: Math.max(...this.props.chartData[0].data) + 1
+                suggestedMax: Math.max(...this.props.chartData[0].data) +  Math.max(...this.props.chartData[0].data) * 0.1
               }
             }
           ]
@@ -80,7 +80,7 @@ class SmallStats extends React.Component {
   }
 
   render() {
-    const { variation, label, value, percentage, increase } = this.props;
+    const { variation, label, value, percentage, increase, priceData } = this.props;
 
     const cardClasses = classNames(
       "stats-small",
@@ -123,20 +123,39 @@ class SmallStats extends React.Component {
       `stats-small__percentage--${increase ? "increase" : "decrease"}`
     );
 
+    const miniValueClasses = classNames(
+      "stats-small__label",
+      "text-uppercase",
+      variation !== "1" && "mb-1",
+      'ml-10',
+      "align-self-end"
+    );
+
     const canvasHeight = variation === "1" ? 120 : 60;
 
     return (
       <Card small className={cardClasses}>
         <CardBody className={cardBodyClasses}>
-          <div className={innerWrapperClasses}>
+          <div className={innerWrapperClasses} style={{width: '80%'}}>
             <div className={dataFieldClasses}>
               <span className={labelClasses}>{label}</span>
-              <h6 className={valueClasses}>{value}</h6>
+              <div className="d-flex justify-content-center">
+                <h6 className={valueClasses}>{value}</h6>
+                <h6 className={miniValueClasses} style={{marginLeft: '7px'}}> {increase? '>' : '<'}  {priceData.value}</h6>
+              </div>
             </div>
             <div className={innerDataFieldClasses}>
               <span className={percentageClasses}>{percentage}</span>
             </div>
+            <div className="d-flex justify-content-around mt-2">
+              <span data-tip data-for={'pb' + label} style={{ zIndex: 1}}>{priceData.pb_fair_value}</span>
+              <span data-tip data-for={'pe' + label} style={{ zIndex: 1}}>{priceData.pe_fair_value}</span>
+              <span data-tip data-for={'bj' + label} style={{ zIndex: 1}}>{priceData.benjamin_fair_value}</span>
+            </div>
           </div>
+          <ReactTooltip id={'pb' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/B Fair Value</span></ReactTooltip>
+          <ReactTooltip id={'pe' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/E Fair Value</span></ReactTooltip>
+          <ReactTooltip id={'bj' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>Benjamin Fair Value</span></ReactTooltip>
           <canvas
             height={canvasHeight}
             ref={this.canvasRef}
@@ -184,7 +203,9 @@ SmallStats.propTypes = {
   /**
    * The chart labels.
    */
-  chartLabels: PropTypes.array
+  chartLabels: PropTypes.array,
+
+  priceData: PropTypes.object
 };
 
 SmallStats.defaultProps = {
@@ -195,7 +216,8 @@ SmallStats.defaultProps = {
   chartOptions: Object.create(null),
   chartConfig: Object.create(null),
   chartData: [],
-  chartLabels: []
+  chartLabels: [],
+  priceData: {}
 };
 
 export default SmallStats;
