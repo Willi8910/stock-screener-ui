@@ -78,10 +78,8 @@ class Store extends EventEmitter {
   
   async logoutAccount() {
     const result = await logoutAccount({token: this.getAccount()})
-    if(result.success){
-      _store.token = null
-      sessionStorage.removeItem('token');
-    }
+    _store.token = null
+    sessionStorage.removeItem('token');
     this.emit(Constants.CHANGE);
     return result;
   }

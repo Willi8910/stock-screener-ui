@@ -1,11 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { NavLink as RouteNavLink } from "react-router-dom";
+import { Dispatcher, Constants } from "../../../flux";
 import { NavItem, NavLink } from "shards-react";
 
-const SidebarNavItem = ({ item }) => (
-  <NavItem>
-    <NavLink tag={(props) => <RouteNavLink {...props} />} to={item.to}>
+const SidebarNavItem = ({ item }) => {
+  
+  
+  const handleClick = () => {
+    Dispatcher.dispatch({
+      actionType: Constants.TOGGLE_SIDEBAR
+    });
+  }
+
+  return(
+  <NavItem onClick={handleClick}>
+    <NavLink tag={(props) => <RouteNavLink {...props} />} to={item.to} >
       {item.htmlBefore && (
         <div
           className="d-inline-block item-icon-wrapper"
@@ -22,6 +32,7 @@ const SidebarNavItem = ({ item }) => (
     </NavLink>
   </NavItem>
 );
+}
 
 SidebarNavItem.propTypes = {
   /**

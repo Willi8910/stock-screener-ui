@@ -8,13 +8,13 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
     <Container fluid={contained}>
       <Row>
         <Nav>
-          {menuItems.map((item, idx) => (
+          {/* {menuItems.map((item, idx) => (
             <NavItem key={idx}>
               <NavLink to={item.to}>
                 {item.title}
               </NavLink>
             </NavItem>
-          ))}
+          ))} */}
         </Nav>
         <span className="copyright ml-auto my-auto mr-2">{copyright}</span>
       </Row>

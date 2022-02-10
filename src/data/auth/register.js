@@ -10,11 +10,11 @@ export default async function(payload) {
       }
       else{
         const message = "Something wrong happen"
-        return{message: message, success: false}
+        return{message: response.status.message, success: false}
       }
     }) 
     .catch((error) => {
-        return{message: error.response? error.response.data : null, success: false}
+        return{message: error.response? error.response.data.status.message : "Something wrong happen", success: false}
     })
   )
 }

@@ -140,12 +140,12 @@ class SmallStats extends React.Component {
             <div className={dataFieldClasses}>
               <span className={labelClasses}>{label}</span>
               <div className="d-flex justify-content-center">
-                <h6 className={valueClasses}>{value}</h6>
-                <h6 className={miniValueClasses} style={{marginLeft: '7px'}}> {increase? '>' : '<'}  {priceData.value}</h6>
+                <h6 className={valueClasses} data-tip data-for={'price' + label} >{value}</h6>
+                <h6 className={miniValueClasses} style={{marginLeft: '7px'}} data-tip data-for={'priceb' + label} >  {increase? '>' : '<'}  {priceData.value}</h6>
               </div>
             </div>
             <div className={innerDataFieldClasses}>
-              <span className={percentageClasses}>{percentage}</span>
+              <span className={percentageClasses} data-tip data-for={'%' + label}>{percentage}</span>
             </div>
             <div className="d-flex justify-content-around mt-2">
               <span data-tip data-for={'pb' + label} style={{ zIndex: 1}}>{priceData.pb_fair_value}</span>
@@ -153,6 +153,9 @@ class SmallStats extends React.Component {
               <span data-tip data-for={'bj' + label} style={{ zIndex: 1}}>{priceData.benjamin_fair_value}</span>
             </div>
           </div>
+          <ReactTooltip id={'price' + label} place="top" type="dark" effect="float" style={{ zIndex: 1}}><span>Current Value</span></ReactTooltip>
+          <ReactTooltip id={'priceb' + label} place="top" type="dark" effect="float" style={{ zIndex: 1}}><span>Last Checked Value</span></ReactTooltip>
+          <ReactTooltip id={'%' + label} place="right" type="dark" effect="float" style={{ zIndex: 1}}><span>Difference in %</span></ReactTooltip>
           <ReactTooltip id={'pb' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/B Fair Value</span></ReactTooltip>
           <ReactTooltip id={'pe' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/E Fair Value</span></ReactTooltip>
           <ReactTooltip id={'bj' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>Benjamin Fair Value</span></ReactTooltip>

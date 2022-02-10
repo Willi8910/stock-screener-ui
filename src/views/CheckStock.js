@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import { Container, Row, Col, Card, CardHeader, CardBody, Alert } from "shards-react";
 import axios from "axios";
 
 import PageTitle from "../components/common/PageTitle";
 import StockChart from "../components/blog/StockChart";
 import StockInputForm from "../components/stock/StockInputForm";
-import Alert from 'react-bootstrap/Alert';
+// import Alert from 'react-bootstrap/Alert';
 import { Store } from "../flux";
 import { BallTriangle } from  'react-loader-spinner';
 
@@ -20,7 +20,7 @@ class CheckStock extends React.Component {
 
   searchStock = (stockName) => {
     if(!this.state.loading){
-      this.setState({ loading: true, stock: null, name:"" });
+      this.setState({ loading: true, stock: null, name:"", error: null });
       axios.post(baseURL + "/stocks", { stock: stockName }, {
         headers: {
           Authorization: this.state.token
@@ -33,11 +33,10 @@ class CheckStock extends React.Component {
         else{
           const message = "Something wrong happen"
           this.setState({error: message, loading:false})
-
         }
       }) 
       .catch((error) => {
-        this.setState({loading:false, error: error.response? error.response.message : null})
+        this.setState({loading:false, error: 'Something wrong happen please try again'})
       })
     }
   }
@@ -71,7 +70,7 @@ class CheckStock extends React.Component {
           method: price['Method'][index], 
           current_price: price["Current Price"][index],
           fair_price: price["Fair Price"][index],
-          mos: price['MOS'][index]
+          mos: Math.round((price["MOS"][index] + Number.EPSILON) * 100) / 100 
         }      
         priceTable.push(method)
       }
@@ -127,11 +126,13 @@ class CheckStock extends React.Component {
 
   render() {
     return (
-      <Container fluid className="main-content-container px-4">
+      <Container fluid className="main-content-container">
+      { this.state.error && 
+        <Alert className="mb-0" style={{backgroundColor:'#fa8991'}}>
+        <i className="fa fa-info mx-2"></i> {this.state.error}
+        </Alert>
+      }
 
-        { this.state.error && 
-          <Alert  dismissible onClose={() => this.setState({error: null})}> {this.state.error} </Alert>
-        }
         {/* Page Header */}
         <StockInputForm searchStock={this.searchStock}/>
         {this.state.loading && <BallTriangle wrapperStyle={{justifyContent: "center"}} color="#00BFFF" height={100} width={100} />}

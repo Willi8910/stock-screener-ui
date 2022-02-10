@@ -13,9 +13,9 @@ import {
 
 import { Store } from "../../flux";
 import PageTitle from "../../components/common/PageTitle";
-import { Navigate, NavLink as RouteNavLink } from "react-router-dom";
-import { NavLink } from "shards-react";
+import { Link, Navigate } from "react-router-dom";
 import { BallTriangle } from  'react-loader-spinner';
+import Stack from 'react-bootstrap/Stack';
 
 
 const Register = () => {
@@ -81,12 +81,12 @@ const Register = () => {
                         />
                       </Col>
                     </Row>
-                    <div className="d-flex">
-                      <Button type="submit" className="mt-4 mb-4">Create New Account</Button>
-                      <NavLink to='/sign-in'>
+                    <Stack direction="horizontal" gap={3}>
+                      <Button type="submit" className="mt-3">Create New Account</Button>
+                      <Link to='/sign-in'>
                         <Button className="mt-3">Login</Button>
-                      </NavLink>
-                    </div>
+                      </Link>
+                    </Stack>
                    
                     
                   </Form>

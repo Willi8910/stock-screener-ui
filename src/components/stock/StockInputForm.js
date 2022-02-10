@@ -15,7 +15,7 @@ const StockInputForm = (props) =>{
   const [name, setName] = useState("");
 
   const handleChange = (e) => {
-    setName(e.target.value);
+    setName(e.target.value.toUpperCase());
   }
 
   const handleSubmit = (e) => {
@@ -32,11 +32,12 @@ const StockInputForm = (props) =>{
         <ListGroupItem className="p-3">
           <Row>
             <Col>
-              <Form >
+              <Form onSubmit={handleSubmit}>
                 <Row form>
                   <Col md="6" className="form-group">
                     <label htmlFor="feStockName">Stock Name</label>
                     <FormInput
+                      autoFocus 
                       id="feStockName"
                       placeholder="Stock name"
                       value={name}
@@ -44,7 +45,7 @@ const StockInputForm = (props) =>{
                     />
                   </Col>
                 </Row>
-                <Button theme="accent" onClick={handleSubmit}>Start Analyze</Button>
+                <Button theme="accent" type="submit">Start Analyze</Button>
               </Form>
             </Col>
           </Row>

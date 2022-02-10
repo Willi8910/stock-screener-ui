@@ -32,9 +32,7 @@ export default class UserActions extends React.Component {
 
   async logoutAccount(){
     const result = await Store.logoutAccount();
-    if( result.success){
-      window.location.reload(false);
-    }
+    window.location.reload(false);
   }
 
   render() {
@@ -42,7 +40,7 @@ export default class UserActions extends React.Component {
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
          
-          <span className="d-none d-md-inline-block">{this.state.email}</span>
+          <span className="d-md-inline-block">{this.state.email}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem onClick={this.logoutAccount} className="text-danger">
