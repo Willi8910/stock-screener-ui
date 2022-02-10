@@ -1,45 +1,20 @@
-<p align="center">
-<a href="https://designrevision.com/downloads/shards-dashboard-lite-react/">
-<img src="assets/preview.png" width="250" />
-</a>
-</p>
+<h1 align="center" style="border-bottom: none !important; margin-bottom: 5px !important;">Stock Screener UI</h1>
 
-<h1 align="center" style="border-bottom: none !important; margin-bottom: 5px !important;"><a href="https://designrevision.com/downloads/shards-dashboard-lite-react/">Shards Dashboard React</a></h1>
 <p align="center">
-  <a href="#">
-    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" />
-  </a>
-  <a href="https://twitter.com/designrevision">
-    <img src="https://img.shields.io/twitter/follow/DesignRevision.svg?style=social&label=Follow" />
-  </a>
+An open source project to help you screening stock valuation, with displaying charts and fair price
 </p>
 
 <p align="center">
-A free React admin dashboard template pack featuring a modern design system <br />  and lots of custom templates and components.
-</p>
 
-<p align="center">
-  <a href="https://designrevision.com/demo/shards-dashboard-lite-react">
-    <img height="55px" src="assets/btn-live-preview.png" />
-  </a>
-  <a href="https://designrevision.com/downloads/shards-dashboard-lite-react">
-    <img height="55px" src="assets/btn-learn-more.png" />
-  </a>
+https://user-images.githubusercontent.com/16332498/153367313-fedd6e19-1d35-41b4-beca-c025ba524342.mp4
 </p>
 
 <br />
-
-<p align="center">
-<a href="https://designrevision.com/downloads/shards-dashboard-lite-react">
-<img src="assets/demo-preview.gif" width="650" />
-</a>
-</p>
+> ✨ **Note:** Only Indonesia Stock market can be analyzed currently
 
 <br />
 
-> ✨ **Note:** You can download the Sketch files from the official product page.
-
-<br />
+We have our own API as well: https://github.com/Willi8910/StockScreener
 
 ### Quick Start
 
@@ -49,59 +24,14 @@ A free React admin dashboard template pack featuring a modern design system <br 
 
 <br />
 
-### Project Structure
+Stock Screener UI is an interface to do screening for your Stock. Currently this stock screener can only apply to Indonesia stock market. There is 2 results of this screener API: financial valuation, which covers 12 financial ratio for the stock currently have, and prediction for the stock price. Prediction show from 3 algorithm: PER valuation, PBV ratio method, and Benjamin Graham formula. DISCLAIMER: every result from this API only to help you decide analyzing the Stock, not by any means to promt you to buy so this is not FINANCIAL ADVICE.
 
-- This project is bootstrapped using [Create React App](https://github.com/facebook/create-react-app).
-- **Flux** is used for state management and all Flux specific files are located inside `src/flux`. Transitioning to a more robust solution such as Redux is also fairly simple.
-- All primary templates are located inside `src/views`.
-- There is only one single layout defined (Default) inside `src/layouts`, however, the current structure provides an easy way of extending the UI kit. 
-- The `src/components` directory hosts all template-specific subcomponents in their own subdirectory.
-- The layout styles inherited from Shards Dashboard are pulled in from the `src/shards-dashboard` submodule inside `src/App.js`.
-- Other extra styles specific to the libraries used are located inside `src/assets`.
-- The `src/utils` directory contains generic Chart.js utilities.
-
-<br />
-
-### Available Scripts
-
-### `npm start`
-
-Runs the app in the development mode.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+There is another page to view your historical analytics, this view is in compact mode so this only have limited information, to view what of each number mean you can hover directly to each elements. To update the numbers you can analyze back the stock. 
 
 
-<br />
 
-### 🌟 Pro Version
 
-If you're looking for something more, check out [Shards Dashboard Pro React](https://designrevision.com/downloads/shards-dashboard-pro-react/) which features many more custom templates and components. Use the `GITHUB15` coupon code for a **15% discount off the current price**.
 
-<br />
+https://user-images.githubusercontent.com/16332498/153367301-70887a39-10f7-44fd-bb90-99a32c5d336d.mp4
 
-### Built using
 
-- [Shards React](https://github.com/designrevision/shards-react)
-- [Chart.js](https://www.chartjs.org/)
-- [Flux](https://facebook.github.io/flux/)
-- [No UI Slider](https://refreshless.com/nouislider/)
-- [React Datepicker](https://www.npmjs.com/package/react-datepicker)
-- [Quill](https://quilljs.com/)
-
-<br />
-
-### Changelog
-
-Please check out the [CHANGELOG](CHANGELOG.md).
