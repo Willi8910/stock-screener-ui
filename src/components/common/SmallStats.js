@@ -5,12 +5,15 @@ import shortid from "shortid";
 import { Card, CardBody } from "shards-react";
 import ReactTooltip from 'react-tooltip';
 import Chart from "../../utils/chart";
+import { FaStar, FaRegStar, FaTrashAlt } from 'react-icons/fa';
+import { Store } from "../../flux";
 
 class SmallStats extends React.Component {
   constructor(props) {
     super(props);
 
     this.canvasRef = React.createRef();
+    this.state = {style: {opacity: 0.1}}
   }
 
   componentDidMount() {
@@ -133,12 +136,36 @@ class SmallStats extends React.Component {
 
     const canvasHeight = variation === "1" ? 120 : 60;
 
+    const renderFav = () => {
+      if(priceData.favourite){
+        return (
+          <FaStar style={{color: '#ffc800', outline: 'none'}} data-tip data-for={'fv' + label}  className="ml-2" onClick={() =>this.props.deleteFavourite(this.props.priceData.id)} />
+        )
+      }
+      return (
+        <FaRegStar style={{color: '#ffc800', outline: 'none'}} data-tip data-for={'fv' + label}  className="ml-2" onClick={() =>this.props.saveFavourite(this.props.priceData.id)} />
+      )
+    }
+    const renderDelete = () => {
+      return (
+        <div onMouseEnter={e => {
+          this.setState({style: {opacity: 1.0}});
+          }}
+          onMouseLeave={e => {
+              this.setState({style: {opacity: 0.1}});
+          }} style={{width: '30px', height: '30px', position: 'absolute', right: 0, top: 0, background: 'linear-gradient(to top right, rgba(255,0,0,0), rgba(255, 112, 112,0.25))'}} className="d-flex justify-content-end rounded">
+          <FaTrashAlt style={{color: 'red', marginRight: '8px', marginTop: '8px', ...this.state.style, outline: 'none'}} data-tip data-for={'del' + label} onClick={() =>this.props.deleteStock()}/>
+        </div>
+      )
+    }
+
     return (
       <Card small className={cardClasses}>
         <CardBody className={cardBodyClasses}>
           <div className={innerWrapperClasses} style={{width: '80%'}}>
             <div className={dataFieldClasses}>
-              <span className={labelClasses}>{label}</span>
+              <div><span className={labelClasses}>{label}</span> {renderFav()}</div>
+              <div> {renderDelete()}</div>
               <div className="d-flex justify-content-center">
                 <h6 className={valueClasses} data-tip data-for={'price' + label} >{value}</h6>
                 <h6 className={miniValueClasses} style={{marginLeft: '7px'}} data-tip data-for={'priceb' + label} >  {increase? '>' : '<'}  {priceData.value}</h6>
@@ -159,6 +186,8 @@ class SmallStats extends React.Component {
           <ReactTooltip id={'pb' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/B Fair Value</span></ReactTooltip>
           <ReactTooltip id={'pe' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>P/E Fair Value</span></ReactTooltip>
           <ReactTooltip id={'bj' + label} place="bottom" type="dark" effect="float" style={{ zIndex: 1}}><span>Benjamin Fair Value</span></ReactTooltip>
+          <ReactTooltip id={'fv' + label} place="right" type="dark" effect="float" style={{ zIndex: 1}}><span>{priceData.favourite ? 'Remove Favourite' : 'Add Favourite'}</span></ReactTooltip>
+          <ReactTooltip id={'del' + label} place="right" type="dark" effect="float" style={{ zIndex: 1}}><span>Delete Stock</span></ReactTooltip>
           <canvas
             height={canvasHeight}
             ref={this.canvasRef}

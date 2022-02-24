@@ -5,9 +5,11 @@ import Constants from "./constants";
 import getSidebarNavItems from "../data/sidebar-nav-items";
 import getStockDescription from "../data/stock";
 import getStocks from "../data/get-stock";
+import deleteStock from "../data/delete-stock";
 import postLoginAccount from "../data/auth/login";
 import postRegisterAccount from "../data/auth/register";
 import logoutAccount from "../data/auth/logout";
+import {saveFavourite, deleteFavourite} from "../data/favourite";
 
 let _store = {
   menuVisible: false,
@@ -88,6 +90,18 @@ class Store extends EventEmitter {
     const result = await getStocks({token: this.getAccount()})
     this.emit(Constants.CHANGE);
     return result;
+  }
+
+  deleteStock(id) {
+    return deleteStock({token: this.getAccount(), id: id})
+  }
+
+  saveFavourite(id) {
+    return saveFavourite({token: this.getAccount(), id: id})
+  }
+
+  deleteFavourite(id) {
+    return deleteFavourite({token: this.getAccount(), id: id})
   }
 
   getMenuState() {

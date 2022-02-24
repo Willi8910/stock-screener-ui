@@ -41,6 +41,7 @@ class CheckStock extends React.Component {
     }
   }
 
+
   renderChart = () => {
     const stock = this.state.stock
     if(stock){

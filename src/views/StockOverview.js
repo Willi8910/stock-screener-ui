@@ -5,6 +5,10 @@ import PageTitle from "./../components/common/PageTitle";
 import SmallStats from "./../components/common/SmallStats";
 import { Store } from "../flux";
 import { BallTriangle } from "react-loader-spinner";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class StockOverview extends React.Component {
   constructor(props) {
@@ -12,7 +16,70 @@ class StockOverview extends React.Component {
     this.state = {stocks: null, loading: true}
   }
 
-  async componentDidMount() {
+  removeStock(idx){
+    const stocks = [...this.state.stocks]
+    stocks.splice(idx, 1)
+    this.setState({stocks: stocks})
+  }
+
+  deleteStock = (idx) => {
+    const stock = this.state.stocks[idx]
+    console.log(stock)
+    const deleteStock = () => Store.deleteStock(stock.priceData.id);
+    confirmAlert({
+      message: 'Confirm to delete ' + stock.label,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            toast.promise(
+                deleteStock,
+                {
+                  pending: 'Deleting stock',
+                  success: 'Successfully delete stock',
+                  error: 'Fail to delete stock'
+                }
+            ).then(() => this.removeStock(idx))
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    });
+  }
+  
+  addFavourite = (id) => {
+    const saveFavourite = () => Store.saveFavourite(id);
+    toast.promise(
+      saveFavourite,
+      {
+        pending: 'Add favourite',
+        success: 'Successfully add favourite',
+        error: 'Fail to add favourite'
+      }
+    ).then(() => {
+      this.setState({loading: true})
+      this.initialize()
+    })
+  }
+
+  deleteFavourite = (id) => {
+    const deleteFavourite = () => Store.deleteFavourite(id);
+    toast.promise(
+      deleteFavourite,
+      {
+        pending: 'Remove favourite',
+        success: 'Successfully remove favourite',
+        error: 'Fail to remove favourite'
+      }
+    ).then(() => {
+      this.setState({loading: true})
+      this.initialize()
+    })
+  }
+
+  initialize = async () => {
     const stocks = await Store.getStocks();
 
     if(stocks.success){
@@ -58,6 +125,10 @@ class StockOverview extends React.Component {
       this.setState({stocks: stockData, loading: false})
     }
     else alert("Something wrong happen please try again");
+  }
+
+  componentDidMount() {
+    this.initialize()
     
   }
 
@@ -76,15 +147,32 @@ class StockOverview extends React.Component {
             increase={stats.increase}
             decrease={stats.decrease}
             priceData={stats.priceData}
+            deleteStock={() => this.deleteStock(idx)}
+            saveFavourite={(id) => this.addFavourite(id)}
+            deleteFavourite={(id) => this.deleteFavourite(id)}
           />
         </Col>
       ))
     }
   }
+
+  renderToast(){
+    return <ToastContainer
+        position="top-right"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        />
+  }
   
   render(){
     return(
       <Container fluid className="main-content-container px-4">
+        {this.renderToast()}
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
           <PageTitle title="Stock Overview" subtitle="Dashboard" className="text-sm-left mb-3" />
