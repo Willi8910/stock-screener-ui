@@ -9,6 +9,8 @@ import StockInputForm from "../components/stock/StockInputForm";
 // import Alert from 'react-bootstrap/Alert';
 import { Store } from "../flux";
 import { BallTriangle } from  'react-loader-spinner';
+import classNames from "classnames";
+
 
 const baseURL = "https://stock-screener-api.herokuapp.com";
 
@@ -29,6 +31,9 @@ class CheckStock extends React.Component {
       .then((response) => {
         if(response.status === 200){
           this.setState({stock: response.data, name: stockName, loading:false})
+        }
+        else if(response.status === 503){
+          this.searchStock(stockName)
         }
         else{
           const message = "Something wrong happen"
@@ -51,8 +56,9 @@ class CheckStock extends React.Component {
         const val = stock.valuation[stat]
         const valData = Object.keys(val)
         const labels = val[valData[0]].length < 10 ? stock.year.year5 : stock.year.year10
-        const limit = valData.length > 1 ? val[valData[1]] : null
-        const limitTop = valData.length > 2 ? val[valData[2]] : null
+        const limit = val["Limit Bottom"]
+        const limitTop = val["Limit Top"]
+        
         return (
           <Col lg ="6" className="mb-4" key={idx}>
             <StockChart title={valData[0]} subtitle={stat} labels={labels} data={val[valData[0]]} limit={limit} limitTop={limitTop}/>
@@ -111,7 +117,7 @@ class CheckStock extends React.Component {
                         <td>{method.method}</td>
                         <td>{method.current_price}</td>
                         <td>{method.fair_price}</td>
-                        <td>{method.mos}</td>
+                        <td className={classNames(method.mos > 15 ? "text-success" : "text-danger")}>{method.mos} %</td>
                       </tr>
                       )
                     })}

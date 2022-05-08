@@ -47,8 +47,8 @@ class Store extends EventEmitter {
     const result = await postRegisterAccount(payload)
     if(result.success){
       _store.token = result.token
-      sessionStorage.setItem('token', JSON.stringify(result));
-      sessionStorage.setItem('email', payload.user.email);
+      localStorage.setItem('token', JSON.stringify(result));
+      localStorage.setItem('email', payload.user.email);
     }
     this.emit(Constants.CHANGE);
     return result;
@@ -58,8 +58,8 @@ class Store extends EventEmitter {
     const result = await postLoginAccount(payload)
     if(result.success){
       _store.token = result.token
-      sessionStorage.setItem('token', JSON.stringify(result));
-      sessionStorage.setItem('email', payload.user.email);
+      localStorage.setItem('token', JSON.stringify(result));
+      localStorage.setItem('email', payload.user.email);
 
     }
     this.emit(Constants.CHANGE);
@@ -67,13 +67,13 @@ class Store extends EventEmitter {
   }
 
   getAccount() {
-    const tokenString = sessionStorage.getItem('token');
+    const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
     return userToken ? userToken.token : null
   }
 
   getEmail() {
-    const email = sessionStorage.getItem('email');
+    const email = localStorage.getItem('email');
     console.log(email)
     return email
   }
@@ -81,7 +81,7 @@ class Store extends EventEmitter {
   async logoutAccount() {
     const result = await logoutAccount({token: this.getAccount()})
     _store.token = null
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     this.emit(Constants.CHANGE);
     return result;
   }

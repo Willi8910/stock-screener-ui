@@ -11,6 +11,8 @@ class StockChart extends React.Component {
     super(props);
 
     this.canvasRef = React.createRef();
+    this.state = {explain: false}
+
   }
 
   handleChartData() {
@@ -29,7 +31,7 @@ class StockChart extends React.Component {
     })
     if(this.props.limit){
       datasets.push({
-        label: "Limit",
+        label: "Limit Bottom",
         fill: "start",
         data: this.props.limit,
         backgroundColor: "rgba(255,65,105,0.1)",
@@ -46,11 +48,10 @@ class StockChart extends React.Component {
     if(this.props.limitTop){
       datasets.push({
         label: "Limit Top",
-        fill: "start",
+        fill: "end",
         data: this.props.limitTop,
         borderColor: "rgba(60, 179, 113,1)",
-        backgroundColor: "rgba(255,65,105,0)",
-        borderDash: [3, 3],
+        backgroundColor: "rgba(255,65,105,0.1)",
         borderWidth: 1,
         pointRadius: 0,
         pointHoverRadius: 2,
@@ -137,21 +138,30 @@ class StockChart extends React.Component {
     BlogUsersOverview.render();
   }
 
+  renderExplanation = () => {
+    const desc = Store.getStockDescription()[this.props.subtitle]
+
+    return <div>
+      <hr/>
+      <span>{desc}</span> <br/> <br/>
+      <span>Limit Bottom: Batas bawah rekomendasi chart, jika di bawah limit bottom maka kinerja kurang bagus</span><br/>
+      <span>Limit Top: Batas atas rekomendasi chart, jika di atas limit bottom maka kinerja kurang bagus </span>
+    </div>
+  }
+
   render() {
     const { title } = this.props;
-    const desc = Store.getStockDescription()[this.props.subtitle]
     return (
       <Card small className="h-100">
-        <CardHeader className="border-bottom">
+        <CardHeader className="border-bottom" data-tip data-for={this.props.subtitle} onClick={() => this.setState({explain: !this.state.explain})}>
           <h6 className="m-0" >{title} {'  '}
-            <FaRegQuestionCircle data-tip data-for={this.props.subtitle} className="ml-4"></FaRegQuestionCircle>
+            <FaRegQuestionCircle  className="ml-4"></FaRegQuestionCircle>
           </h6>
-
-         
-          <ReactTooltip id={this.props.subtitle} place="right" type="dark" effect="float">
-          <span>{desc}</span>
-          </ReactTooltip>
+          {this.state.explain && this.renderExplanation()}
         </CardHeader>
+        <ReactTooltip id={this.props.subtitle} place="right" type="dark" effect="float">
+          Click to show explanation
+        </ReactTooltip>
         <CardBody className="pt-0">
           <canvas
             height="120"

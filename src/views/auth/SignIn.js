@@ -26,6 +26,12 @@ const ComponentsOverview = () => {
   const handleSubmit = async e => {
     setLoading(true)
     e.preventDefault();
+    
+    if(email == "" || password == ""){
+      setLoading(false)
+      alert("Email and password are required")
+      return;
+    }
     const result = await Store.loginAccount({
       user: {
         email: email,
@@ -46,24 +52,34 @@ const ComponentsOverview = () => {
     return <Navigate to={redirect} />
   }
   return(
-  <Container fluid className="main-content-container px-4">
-    <Row noGutters className="page-header py-4">
-      <PageTitle
-        sm="4"
-        title="Login"
-        className="text-sm-left"
-      />
-    </Row>
+  <Container fluid className="main-content-container px-4" style={{height: '100%', minHeight: 'calc(100vh)', paddingTop: '10%'}}>
+    
     <Row>
-      <Col lg="8" className="mb-4">
-        <Card small>
+      <Col xl="4" lg="6" md="8" sm="10" className="mb-4 m-auto">
+        <Card small style={{background: 'rgba(195, 213, 219, 0.5)'}}>
           <ListGroup flush>
-            <ListGroupItem className="p-3">
+            <ListGroupItem className="p-3" style={{background: 'rgba(195, 213, 219, 0.5)'}}>
+            <Row>
+              <img
+                id="main-logo"
+                className="d-inline-block align-top mr-1 m-auto"
+                style={{ maxWidth: "100px" }}
+                src={require("../../images/shards-dashboards-logo.svg")}
+                alt="Stock Screener"
+              />
+            </Row>
+            <Row className="page-header py-4">
+              <PageTitle
+                sm="4"
+                title="Login"
+                className="text-sm-left m-auto"
+              />
+            </Row>
               <Row>
-                <Col>
+                <Col  >
                   <Form onSubmit={handleSubmit}>
                     <Row form>
-                      <Col md="6" className="form-group">
+                      <Col md="12" className="form-group">
                         <label htmlFor="feEmailAddress">Email</label>
                         <FormInput
                           id="feEmailAddress"
@@ -72,13 +88,14 @@ const ComponentsOverview = () => {
                           onChange={e => setEmail(e.target.value)} 
                         />
                       </Col>
-                      <Col md="6">
+                      <Col md="12">
                         <label htmlFor="fePassword">Password</label>
                         <FormInput
                           id="fePassword"
                           type="password"
                           placeholder="Password"
                           onChange={e => setPassword(e.target.value)}
+                          require
                         />
                       </Col>
                     </Row>
