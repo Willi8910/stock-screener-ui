@@ -19,6 +19,7 @@ class StockOverview extends React.Component {
   removeStock(idx){
     const stocks = [...this.state.stocks]
     stocks.splice(idx, 1)
+    this.setState({stocks: []})
     this.setState({stocks: stocks})
   }
 
@@ -137,7 +138,7 @@ class StockOverview extends React.Component {
       return this.state.stocks.map((stats, idx) => (
         <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
           <SmallStats
-            id={`small-stats-${idx}`}
+            id={`small-stats-${idx}-${stats.label}`}
             variation="1"
             chartData={stats.datasets}
             chartLabels={stats.chartLabels}

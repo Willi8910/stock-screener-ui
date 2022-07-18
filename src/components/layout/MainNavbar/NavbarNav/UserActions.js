@@ -43,6 +43,10 @@ export default class UserActions extends React.Component {
           <span className="d-md-inline-block">{this.state.email}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
+          
+          <DropdownItem>
+          <Link to='/reset-password' className="d-md-inline-block">Reset password</Link>
+          </DropdownItem>
           <DropdownItem onClick={this.logoutAccount} className="text-danger">
             <i className="material-icons text-danger">&#xE879;</i> Logout
           </DropdownItem>

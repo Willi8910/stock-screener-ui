@@ -13,7 +13,7 @@ class SmallStats extends React.Component {
     super(props);
 
     this.canvasRef = React.createRef();
-    this.state = {style: {opacity: 0.1}}
+    this.state = {style: {opacity: 0.1}, value: 0}
   }
 
   componentDidMount() {

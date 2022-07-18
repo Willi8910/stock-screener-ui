@@ -55,9 +55,13 @@ class CheckStock extends React.Component {
       stats.map((stat, idx) => {
         const val = stock.valuation[stat]
         const valData = Object.keys(val)
-        const labels = val[valData[0]].length < 10 ? stock.year.year5 : stock.year.year10
+        if(val[valData[0]].length == 0){
+          return null;
+        }
+
         const limit = val["Limit Bottom"]
         const limitTop = val["Limit Top"]
+        const labels = stock.year.year10.slice(-val[valData[0]].length)
         
         return (
           <Col lg ="6" className="mb-4" key={idx}>

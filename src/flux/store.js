@@ -6,7 +6,9 @@ import getSidebarNavItems from "../data/sidebar-nav-items";
 import getStockDescription from "../data/stock";
 import getStocks from "../data/get-stock";
 import deleteStock from "../data/delete-stock";
+import updateStock from "../data/update-stock";
 import postLoginAccount from "../data/auth/login";
+import postResetPasssword from "../data/auth/reset";
 import postRegisterAccount from "../data/auth/register";
 import logoutAccount from "../data/auth/logout";
 import {saveFavourite, deleteFavourite} from "../data/favourite";
@@ -66,6 +68,12 @@ class Store extends EventEmitter {
     return result;
   }
 
+  async resetPassword(payload) {
+    const result = await postResetPasssword(payload)
+    this.emit(Constants.CHANGE);
+    return result;
+  }
+
   getAccount() {
     const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
@@ -90,6 +98,10 @@ class Store extends EventEmitter {
     const result = await getStocks({token: this.getAccount()})
     this.emit(Constants.CHANGE);
     return result;
+  }
+
+  updateStock(payload) {
+    return updateStock(payload)
   }
 
   deleteStock(id) {

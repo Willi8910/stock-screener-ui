@@ -7,6 +7,7 @@ import { DefaultLayout, Guest } from "./layouts";
 // Route Views
 import StockOverview from "./views/StockOverview";
 import CheckStock from "./views/CheckStock";
+import ResetPassword from "./views/auth/ResetPassword";
 import Errors from "./views/Errors";
 
 export default [
@@ -25,5 +26,10 @@ export default [
     path: "/check-stock",
     layout: DefaultLayout,
     component: CheckStock
+  },
+  {
+    path: "/reset-password",
+    layout: DefaultLayout,
+    component: ResetPassword
   },
 ];
