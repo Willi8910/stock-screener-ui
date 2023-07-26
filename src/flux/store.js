@@ -7,6 +7,7 @@ import getStockDescription from "../data/stock";
 import getStocks from "../data/get-stock";
 import deleteStock from "../data/delete-stock";
 import updateStock from "../data/update-stock";
+import getRecommendation from "../data/get-recommendation";
 import postLoginAccount from "../data/auth/login";
 import postResetPasssword from "../data/auth/reset";
 import postRegisterAccount from "../data/auth/register";
@@ -102,6 +103,10 @@ class Store extends EventEmitter {
 
   updateStock(payload) {
     return updateStock(payload)
+  }
+
+  async getRecommendation() {
+    return getRecommendation({token: this.getAccount()})
   }
 
   deleteStock(id) {

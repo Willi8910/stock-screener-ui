@@ -5,8 +5,6 @@ import { Dispatcher, Constants } from "../../../flux";
 import { NavItem, NavLink } from "shards-react";
 
 const SidebarNavItem = ({ item }) => {
-  
-  
   const handleClick = () => {
     Dispatcher.dispatch({
       actionType: Constants.TOGGLE_SIDEBAR

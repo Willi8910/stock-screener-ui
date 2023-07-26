@@ -12,5 +12,11 @@ export default function() {
       htmlBefore: '<i class="material-icons">bar_chart</i>',
       htmlAfter: ""
     },
+    {
+      title: "Recommended Stock",
+      to: "/recommendations",
+      htmlBefore: '<i class="material-icons">token</i>',
+      htmlAfter: ""
+    },
   ];
 }

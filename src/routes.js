@@ -6,6 +6,7 @@ import { DefaultLayout, Guest } from "./layouts";
 
 // Route Views
 import StockOverview from "./views/StockOverview";
+import Recommendations from "./views/Recommendations";
 import CheckStock from "./views/CheckStock";
 import ResetPassword from "./views/auth/ResetPassword";
 import Errors from "./views/Errors";
@@ -21,6 +22,11 @@ export default [
     path: "/stock-overview",
     layout: DefaultLayout,
     component: StockOverview
+  },
+  {
+    path: "/recommendations",
+    layout: DefaultLayout,
+    component: Recommendations
   },
   {
     path: "/check-stock",

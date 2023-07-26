@@ -10,9 +10,11 @@ import StockInputForm from "../components/stock/StockInputForm";
 import { Store } from "../flux";
 import { BallTriangle } from  'react-loader-spinner';
 import classNames from "classnames";
+import { useSearchParams } from 'react-router-dom'
 
 
-const baseURL = "https://stock-screener-api.herokuapp.com";
+// const baseURL = "https://stock-screener-api.herokuapp.com";
+const baseURL = "http://localhost:3002";
 
 class CheckStock extends React.Component {
   constructor(props) {
@@ -46,6 +48,15 @@ class CheckStock extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const quote = params.get('stock')
+    if(quote){
+      this.searchStock(quote)
+    }
+  }
+
 
   renderChart = () => {
     const stock = this.state.stock
@@ -53,9 +64,10 @@ class CheckStock extends React.Component {
       const stats = Object.keys(stock.valuation);
       return(
       stats.map((stat, idx) => {
+        console.log(stat)
         const val = stock.valuation[stat]
         const valData = Object.keys(val)
-        if(val[valData[0]].length == 0){
+        if(val[valData[0]] == null || val[valData[0]].length == 0){
           return null;
         }
 
